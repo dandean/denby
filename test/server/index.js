@@ -80,15 +80,16 @@ describe('Denby', function() {
       function View() {
         Denby.apply(this, arguments);
       }
-      View.prototype = Object.create(Denby.prototype);
-      Object.defineProperty(View.prototype, 'options', {
-        value: {
-          tag: 'section',
-          id: 'rad',
-          className: 'cool',
-          attributes: { 'data-stuff': 'stuff' }
-        },
-        enumerable: false, configurable: true, writable: true
+      View.prototype = Object.create(Denby.prototype, {
+        options: {
+          value: {
+            tag: 'section',
+            id: 'rad',
+            className: 'cool',
+            attributes: { 'data-stuff': 'stuff' }
+          },
+          configurable: true, writable: true
+        }
       });
 
       var view = new View();
@@ -105,15 +106,16 @@ describe('Denby', function() {
       function View() {
         Denby.apply(this, arguments);
       }
-      View.prototype = Object.create(Denby.prototype);
-      Object.defineProperty(View.prototype, 'options', {
-        value: {
-          tag: 'section',
-          id: 'rad',
-          className: 'cool',
-          attributes: { 'data-stuff': 'stuff' }
-        },
-        enumerable: false, configurable: true, writable: true
+      View.prototype = Object.create(Denby.prototype, {
+        options: {
+          value: {
+            tag: 'section',
+            id: 'rad',
+            className: 'cool',
+            attributes: { 'data-stuff': 'stuff' }
+          },
+          configurable: true, writable: true
+        }
       });
 
       // Override defaults on the instance:
@@ -153,30 +155,29 @@ describe('Denby', function() {
           delete this.options.partials;
       }
 
-      DenbyMustache.prototype = Object.create(Denby.prototype);
-
-      Object.defineProperty(DenbyMustache.prototype, 'options', {
-        value: {
-          template: '',
-          partials: {}
+      DenbyMustache.prototype = Object.create(Denby.prototype, {
+        options: {
+          value: {
+            template: '',
+            partials: {}
+          },
+          configurable: true, writable: true
         },
-        enumerable: false, configurable: true, writable: true
-      });
+        render: {
+          value: function(model) {
+            // Find the model and convert it to JSON before possible:
+            model = model || this.model;
+            if (model.toJSON) model = model.toJSON();
 
-      Object.defineProperty(DenbyMustache.prototype, 'render', {
-        value: function(model) {
-          // Find the model and convert it to JSON before possible:
-          model = model || this.model;
-          if (model.toJSON) model = model.toJSON();
+            // Render the template with model data:
+            this.element.innerHTML =
+              Mustache.render(this.template, model || this.model, this.partials);
 
-          // Render the template with model data:
-          this.element.innerHTML =
-            Mustache.render(this.template, model || this.model, this.partials);
-
-          // Call the parent render method:
-          Denby.prototype.render.call(this, model);
-        },
-        enumerable: false, configurable: true, writable: true
+            // Call the parent render method:
+            Denby.prototype.render.call(this, model);
+          },
+          configurable: true, writable: true
+        }
       });
 
       // 
@@ -187,14 +188,14 @@ describe('Denby', function() {
         DenbyMustache.apply(this, arguments);
       }
 
-      Widget.prototype = Object.create(DenbyMustache.prototype);
-
-      Object.defineProperty(Widget.prototype, 'options', {
-        value: {
-          template: '{{ title }}{{#items}}{{>item}}{{/items}}',
-          partials: { item: '{{content}}' }
-        },
-        enumerable: false, configurable: true, writable: true
+      Widget.prototype = Object.create(DenbyMustache.prototype, {
+        options: {
+          value: {
+            template: '{{ title }}{{#items}}{{>item}}{{/items}}',
+            partials: { item: '{{content}}' }
+          },
+          configurable: true, writable: true
+        }
       });
 
       // 
@@ -235,10 +236,11 @@ describe('Denby', function() {
       function View() {
         Denby.apply(this, arguments);
       }
-      View.prototype = Object.create(Denby.prototype);
-      Object.defineProperty(View.prototype, 'options', {
-        value: {},
-        enumerable: false, configurable: true, writable: true
+      View.prototype = Object.create(Denby.prototype, {
+        options: {
+          value: {},
+          configurable: true, writable: true
+        }
       });
 
       var view;
