@@ -95,19 +95,19 @@ function Denby(options) {
 }
 
 // Denby is an EventEmitter:
-Denby.prototype = Object.create(EventEmitter2.prototype);
-
-// Add a defaults options object to the prototype (which is EventEmitter2)
-Object.defineProperty(Denby.prototype, 'options', {
-  value: {},
-  enumerable: false, configurable: true, writable: true
-});
-
-Object.defineProperty(Denby.prototype, 'render', {
-  value: function() {
-    this.emit('render');
+Denby.prototype = Object.create(EventEmitter2.prototype, {
+  // Add a defaults options object to the prototype
+  options: {
+    value: {},
+    configurable: true,
+    writable: true
   },
-  enumerable: false, configurable: true
+  render: {
+    value: function() {
+      this.emit('render');
+    },
+    configurable: true
+  }
 });
 
 module.exports = Denby;
