@@ -74,7 +74,7 @@ function combine() {
 function Denby(options) {
   EventEmitter2.call(this);
 
-  options                      = options || {};
+  options = options || {};
 
   // If provided, remove the model from the options object after setting it
   // on the view itself. Just keeps shit tidy and avoids duplicate refs.
@@ -85,13 +85,22 @@ function Denby(options) {
 
   // Configure protos for nested options before options object itself in order
   // to keep from creating a recursive loop.
-  options.on                   = options.on || {};
-  options.on.__proto__         = this.options.on || {};
+  options.on         = options.on || {};
+  options.attributes = options.attributes || {};
 
-  options.attributes           = options.attributes || {};
-  options.attributes.__proto__ = this.options.attributes || {};
+  if (this.options) {
+    if (this.options.on)         options.on.__proto__         = this.options.on;
+    if (this.options.attributes) options.attributes.__proto__ = this.options.attributes;
+    options.__proto__ = this.options;
+  }
 
-  options.__proto__            = this.options;
+  // options.on                   = options.on || {};
+  // options.on.__proto__         = this.options.on || {};
+
+  // options.attributes           = options.attributes || {};
+  // options.attributes.__proto__ = this.options.attributes || {};
+
+  // options.__proto__            = this.options || {};
 
   // Store options on the instance for later:
   Object.defineProperty(this, 'options', {
