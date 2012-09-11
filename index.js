@@ -94,14 +94,6 @@ function Denby(options) {
     options.__proto__ = this.options;
   }
 
-  // options.on                   = options.on || {};
-  // options.on.__proto__         = this.options.on || {};
-
-  // options.attributes           = options.attributes || {};
-  // options.attributes.__proto__ = this.options.attributes || {};
-
-  // options.__proto__            = this.options || {};
-
   // Store options on the instance for later:
   Object.defineProperty(this, 'options', {
     value: options,
