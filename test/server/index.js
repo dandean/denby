@@ -219,6 +219,29 @@ describe('Denby', function() {
   });
 
   describe('DOM event handling', function() {
+    it('should handle events declared on view defaults', function(done) {
+
+      function View() {
+        Denby.apply(this, arguments);
+      }
+
+      View.prototype = Object.create(Denby.prototype, {
+        options: {
+          value: {
+            on: {
+              'click': function() {
+                done();
+              }
+            }
+          },
+          configurable: true, writable: true
+        }
+      });
+
+      var view = new View();
+      view.element.click();
+    });
+
     it('should accept handlers which are functions', function(done) {
       var view = new Denby({
         on: {

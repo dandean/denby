@@ -111,8 +111,9 @@ function Denby(options) {
     element.setAttribute(name, attributes[name]);
   }
 
-  Object.keys(options.on).forEach(function(event) {
-    var fn = options.on[event];
+  var on = this.options.on;
+  for (var event in on) {
+    var fn = on[event];
     if (fn instanceof Function === false) fn = t[fn];
     if (!fn)
       throw createError('ConfigurationError', fn + ' is not a function');
@@ -121,7 +122,7 @@ function Denby(options) {
     var type = event[0];
     var selector = event.slice(1).join(' ').trim();
     DOM.on(element, type, selector || undefined, fn.bind(t));
-  });
+  }
 
   /**
    * Denby#element -> HTMLElement
