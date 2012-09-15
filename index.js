@@ -97,7 +97,7 @@ function Denby(options) {
   // Store options on the instance for later:
   Object.defineProperty(this, 'options', {
     value: options,
-    enumerable: false, configurable: true, writable: true
+    configurable: true, writable: true
   });
 
   var element = options.element || DOM.create(options.tag || 'div');           
@@ -105,7 +105,11 @@ function Denby(options) {
 
   var attributes = options.attributes;
   if (!element.id) attributes.id = options.id || id();
-  if (options.className) attributes['class'] = options.className;
+  if (options.className) {
+    if (options.element) {
+      DOM.addClass(options.element, options.className)
+    } else attributes['class'] = options.className;
+  }
 
   for (var name in attributes) {
     element.setAttribute(name, attributes[name]);

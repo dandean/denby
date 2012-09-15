@@ -43,7 +43,17 @@ describe('Denby', function() {
     assert.ok('stuff', element.getAttribute('data-stuff'));
   });
 
-  it('shold emit a "render" event when rendered', function(done) {
+  it('should merge class names when given an element with a class name', function() {
+    var element = document.createElement('div');
+    element.className = 'rad';
+    var view = new Denby({ element: element, className: 'cool' });
+    var element = view.element;
+
+    assert.ok(DOM.hasClass(element, 'rad'));
+    assert.ok(DOM.hasClass(element, 'cool'));
+  });
+
+  it('should emit a "render" event when rendered', function(done) {
     var view = new Denby();
     view.on('render', done);
     view.render();
