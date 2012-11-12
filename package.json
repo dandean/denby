@@ -1,6 +1,6 @@
 {
   "name": "denby",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Pearson Denby was an American trapper who in 1830 discovered various deserters from the Duke of Wellington's army.",
   "main": "index.js",
   "scripts": {
@@ -19,8 +19,8 @@
   "author": "Dan Dean",
   "license": "MIT",
   "dependencies": {
-    "element-pants": "*",
-    "eventemitter2": "*"
+    "element-pants": "0.2.0",
+    "eventemitter2": "0.4.11"
   },
   "devDependencies": {
     "mocha": "*",
